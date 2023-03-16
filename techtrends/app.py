@@ -6,42 +6,36 @@ from urllib import response
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
-connection_count = 0
-
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
-
-    global connection_count 
-    connection_count += 1
-    
     return connection
-
-def db_close(connection):
-    connection.close()
-    # global connection_count 
-    # connection_count -= 1
 
 # Function to get a post using its ID
 def get_post(post_id):
     connection = get_db_connection()
+    app.config['DB_CONN_COUNTER'] += 1
+    
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
-    db_close(connection)
+    connection.close()
     return post
 
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+app.config['DB_CONN_COUNTER'] = 0
 
 # Define the main route of the web application 
 @app.route('/')
 def index():
     connection = get_db_connection()
+    app.config['DB_CONN_COUNTER'] += 1
+
     posts = connection.execute('SELECT * FROM posts').fetchall()
-    db_close(connection)
+    connection.close()
     return render_template('index.html', posts=posts)
 
 @app.route('/healthz')
@@ -57,12 +51,10 @@ def healthz():
 def metrics():
     connection = get_db_connection()
     posts = connection.execute('SELECT Count() FROM posts').fetchone()[0]
-    db_close(connection)
-
-    global connection_count
+    connection.close()
 
     response = app.response_class(
-        response=json.dumps({"db_connection_count": connection_count, "post_count": posts}),
+        response=json.dumps({"db_connection_count": app.config['DB_CONN_COUNTER'], "post_count": posts}),
         status=200,
         mimetype='application/json'
     )
@@ -75,7 +67,7 @@ def metrics():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      app.logger.info('Article wit id ' + str(post_id) + ' does not exits.')
+      app.logger.error('Non-existing post')
       return render_template('404.html'), 404
     else:
       app.logger.info('Article \"' + post['title'] + '\" retrieved!')    
@@ -98,6 +90,8 @@ def create():
             flash('Title is required!')
         else:
             connection = get_db_connection()
+            app.config['DB_CONN_COUNTER'] += 1
+
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
             connection.commit()

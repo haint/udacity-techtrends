@@ -1,0 +1,17 @@
+2023-03-16 12:09:52,519 WARNING werkzeug MainThread :  * Debugger is active!
+2023-03-16 12:09:52,523 INFO werkzeug MainThread :  * Debugger PIN: 998-048-997
+2023-03-16 12:10:04,017 WARNING werkzeug MainThread :  * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+2023-03-16 12:10:04,018 INFO werkzeug MainThread :  * Running on http://192.168.60.30:3111/ (Press CTRL+C to quit)
+2023-03-16 12:10:04,018 INFO werkzeug MainThread :  * Restarting with stat
+2023-03-16 12:10:04,181 WARNING werkzeug MainThread :  * Debugger is active!
+2023-03-16 12:10:04,185 INFO werkzeug MainThread :  * Debugger PIN: 998-048-997
+2023-03-16 12:10:49,201 INFO app Thread-2 : About Us retrieved.
+2023-03-16 12:10:49,216 INFO werkzeug Thread-2 : 192.168.60.30 - - [16/Mar/2023 12:10:49] "GET /about HTTP/1.1" 200 -
+2023-03-16 12:10:49,248 INFO werkzeug Thread-3 : 192.168.60.30 - - [16/Mar/2023 12:10:49] "[36mGET /static/css/main.css HTTP/1.1[0m" 304 -
+2023-03-16 12:11:04,001 INFO werkzeug MainThread :  * Detected change in '/Users/ethan/workspace/cloud-native/nd064_course_1/project/techtrends/app.py', reloading
+2023-03-16 12:11:04,045 INFO werkzeug MainThread :  * Restarting with stat
+2023-03-16 12:13:40,019 INFO werkzeug MainThread :  * Restarting with stat
+2023-03-16 12:15:49,652 INFO werkzeug MainThread :  * Restarting with stat
+2023-03-16 12:16:45,509 INFO werkzeug MainThread :  * Restarting with stat
+2023-03-16 12:19:27,236 INFO werkzeug MainThread :  * Restarting with stat

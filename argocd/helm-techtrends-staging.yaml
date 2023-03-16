@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: techtrends-staging
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubenetes.default.svc
+  project: default
+  source:
+    path: helm
+    repoURL: https://github.com/haint/udacity-techtrends.git
+    targetReversion: HEAD
+    helm:
+      values:
+        - values-staging.yaml
+  syncPolicy:
+    automated:
+      prune: true

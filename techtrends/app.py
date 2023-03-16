@@ -21,8 +21,8 @@ def get_db_connection():
 
 def db_close(connection):
     connection.close()
-    global connection_count 
-    connection_count -= 1
+    # global connection_count 
+    # connection_count -= 1
 
 # Function to get a post using its ID
 def get_post(post_id):
@@ -35,8 +35,6 @@ def get_post(post_id):
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
-
-logging.basicConfig(format='%(levelname)s:%(name)s:%(asctime)s, %(message)s', datefmt='%m/%d/%Y, %H:%M:%S', level=logging.DEBUG)
 
 # Define the main route of the web application 
 @app.route('/')
@@ -115,4 +113,5 @@ def create():
 
 # start the application on port 3111
 if __name__ == "__main__":
+   logging.basicConfig(format='%(levelname)s:%(name)s:%(asctime)s, %(message)s', datefmt='%m/%d/%Y, %H:%M:%S', level=logging.DEBUG)
    app.run(host='0.0.0.0', port='3111')

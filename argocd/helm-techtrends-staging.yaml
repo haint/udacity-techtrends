@@ -11,7 +11,7 @@ spec:
   source:
     path: helm
     repoURL: https://github.com/haint/udacity-techtrends.git
-    targetReversion: HEAD
+    targetRevision: HEAD
     helm:
       values:
         - values-staging.yaml
